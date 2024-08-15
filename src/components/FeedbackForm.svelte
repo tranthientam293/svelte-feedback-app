@@ -1,17 +1,15 @@
 <script>
-	import { createEventDispatcher } from 'svelte'
-	import { v4 as uuidv4 } from 'uuid'
 	import Button from './Button.svelte'
+	import { v4 as uuidv4 } from 'uuid'
 	import Card from './Card.svelte'
 	import RatingSelect from './RatingSelect.svelte'
+	import { FeedbackStore } from '@/stores'
 
 	let text = ''
 	let message = ''
 	let btnDisabled = true
 	let rating = '10'
 	const min = 10
-
-	const dispatch = createEventDispatcher()
 
 	function handleInput() {
 		if (text.trim().length <= min) {
@@ -24,9 +22,8 @@
 	}
 
 	/**
-	 * Handle rating change
 	 * @param {CustomEvent<string>} e
-	 */
+	 * */
 	function handleSelect(e) {
 		rating = e.detail
 	}
@@ -39,7 +36,7 @@
 				id: uuidv4()
 			}
 
-			dispatch('add-feedback', newFeedback)
+			FeedbackStore.update((prev) => [...prev, newFeedback])
 			text = ''
 			btnDisabled = true
 		}

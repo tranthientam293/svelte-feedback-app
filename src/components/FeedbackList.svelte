@@ -1,8 +1,8 @@
 <script>
 	import FeebackItem from './FeebackItem.svelte'
-	export let feedback = []
+	import { FeedbackStore } from '@/stores'
 </script>
 
-{#each feedback as fb (fb.id)}
+{#each $FeedbackStore as fb (fb.id)}
 	<FeebackItem item={fb} on:delete-feedback />
 {/each}
